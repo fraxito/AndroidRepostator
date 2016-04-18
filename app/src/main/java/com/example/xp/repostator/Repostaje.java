@@ -6,9 +6,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 
 
 /**
@@ -32,6 +36,20 @@ public class Repostaje extends Fragment {
     @Override
     public void onStart(){
         super.onStart();
+
+
+        EditText editKilometros =(EditText) getActivity().findViewById(R.id.kilometros);
+        editKilometros.setOnEditorActionListener(new TextView.OnEditorActionListener(){
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
+              boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_NEXT){
+                   Log.e("app", "hola k ase");
+                   handled = true;
+                }
+              return handled;
+            }
+        });
 
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
