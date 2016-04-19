@@ -38,27 +38,42 @@ public class Repostaje extends Fragment {
         super.onStart();
 
 
-        EditText editKilometros =(EditText) getActivity().findViewById(R.id.kilometros);
-        editKilometros.setOnEditorActionListener(new TextView.OnEditorActionListener(){
+
+        final EditText editKilometros =(EditText) getActivity().findViewById(R.id.kilometros);
+
+        final EditText editPrecio =(EditText) getActivity().findViewById(R.id.precio);
+        editPrecio.setOnEditorActionListener(new TextView.OnEditorActionListener(){
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
-              boolean handled = false;
-                if (actionId == EditorInfo.IME_ACTION_NEXT){
-                   Log.e("app", "hola k ase");
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE){
+                    SharedPreferences sharedPref = getActivity().getSharedPreferences("datos",Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    //leo el tamaño de la lista de datos que tengo guardado en el shared preferences
+                    int size = sharedPref.getInt("listado_size", 0);
+                    size++;
+                    //guardo el contenido de la caja de texto "precio" en una variable del sharedpreferences
+                    editor.putString("repostaje_"+size, editPrecio.getText().toString());
+                    editor.putInt("listado_size", size);
+                    editor.commit();
+
                    handled = true;
+
                 }
               return handled;
             }
         });
 
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
+        editKilometros.setText(sharedPref.getString("caja1",""));
 
-        editor.putString("caja1", "123456789");
-        editor.putInt("caja2", 1234577);
-        editor.commit();
 
-        Log.e("hola", sharedPref.getString("caja1","error") );
+
+
+//        editor.putString("caja1", "123456789");
+//        editor.putInt("caja2", 1234577);
+//        editor.commit();
+//
+//        Log.e("hola", sharedPref.getString("caja1","error") );
     }
 
 }

@@ -38,7 +38,7 @@
         android:textSize="30sp"
         android:id="@+id/precio"
         android:hint = "Precio por litro"
-        android:imeOptions="actionNext"
+        android:imeOptions="actionDone"
         android:inputType="numberDecimal"
         />
 
