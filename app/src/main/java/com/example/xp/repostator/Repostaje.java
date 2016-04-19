@@ -64,16 +64,7 @@ public class Repostaje extends Fragment {
             }
         });
 
-        editKilometros.setText(sharedPref.getString("caja1",""));
-
-
-
-
-//        editor.putString("caja1", "123456789");
-//        editor.putInt("caja2", 1234577);
-//        editor.commit();
-//
-//        Log.e("hola", sharedPref.getString("caja1","error") );
+     
     }
 
 }
