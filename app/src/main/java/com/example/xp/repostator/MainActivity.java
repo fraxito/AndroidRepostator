@@ -1,5 +1,6 @@
 package com.example.xp.repostator;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,17 +21,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        final Intent ventanaDatos = new Intent(this, EntradaDatos.class);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragmento = new Repostaje();
-                FragmentTransaction cambio = getSupportFragmentManager().beginTransaction();
-                cambio.replace(R.id.marcoInicial, fragmento);
-                cambio.commit();
-
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
+                startActivity(ventanaDatos);
             }
         });
     }

@@ -58,13 +58,13 @@ public class Repostaje extends Fragment {
                     editor.commit();
 
                    handled = true;
-
+                    getActivity().finish();
                 }
               return handled;
             }
         });
 
-     
+
     }
 
 }
