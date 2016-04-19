@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -97,6 +98,23 @@ public class MainActivity extends AppCompatActivity {
                 listadoRepostajes );
 
         listaVista.setAdapter(arrayAdapter);
+
+        listaVista.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+            final Intent ventana = new Intent(MainActivity.this, EntradaDatos.class);
+
+            @Override
+            public void onItemClick(AdapterView<?>adapter,View v, int position, long l){
+
+                String item = (String) adapter.getItemAtPosition(position);
+                Log.e("app1", item);
+                ventana.putExtra("precio", item);
+                startActivity(ventana);
+
+            }
+
+
+        });
 
     }
 
