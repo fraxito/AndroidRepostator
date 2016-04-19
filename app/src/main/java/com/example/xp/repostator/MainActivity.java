@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,15 +28,20 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final Intent ventanaDatos = new Intent(this, EntradaDatos.class);
+        final Intent ventana = new Intent(this, EntradaDatos.class);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(ventanaDatos);
+
+                startActivity(ventana);
+
             }
         });
+
+
+
     }
 
     @Override
@@ -60,28 +66,38 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onStart(){
-        super.onStart();
-        SharedPreferences sharedPref = getSharedPreferences("datos", Context.MODE_PRIVATE);
-        ArrayList <String> listadoRepostajes = new ArrayList<String>();
 
-        int size = sharedPref.getInt("listado_size", 0);
-        //leo los elementos del sharedPref y los guardo en el arraylist
-        for (int i = 1; i<=size; i++){
-            listadoRepostajes.add(sharedPref.getString("repostaje_"+i, ""));
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        ArrayList<String> listadoRepostajes = new ArrayList <String>();
+        ListView listaVista ;
+        SharedPreferences sp = getSharedPreferences("datos", Context.MODE_PRIVATE);
+        //cargo la lista de repostajes de preferences al arraylist
+        int size = sp.getInt("Listado_size", 0);   //  <---- el tamaño de la lista de datos
+
+        for(int i = 1 ; i <= size; i++)
+        {
+            listadoRepostajes.add(sp.getString("Repostaje_" + i, null));
+            Log.e("app1", sp.getString("Repostaje_" + i, ""));
         }
 
-        ListView lista  = (ListView) findViewById(R.id.marcoLista);
+        ///poblamos el listview con el arraylist
 
+        listaVista = (ListView) findViewById(R.id.marcoLista);
 
-        //el array adapter
-        ArrayAdapter <String> arrayAdapter = new ArrayAdapter<String>(
+        // Este es el array adapter, necesita el activity como primer parámetro
+        // , el tipo de listView como segundo parámetro y el array de datos
+        // como tercer parámetro.
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_list_item_1,
-                listadoRepostajes
-        );
-        lista.setAdapter(arrayAdapter);
+                listadoRepostajes );
+
+        listaVista.setAdapter(arrayAdapter);
+
     }
 
-}
+    }

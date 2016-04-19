@@ -6,6 +6,15 @@
     android:orientation="vertical">
 
 
+
+    <DatePicker
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:id="@+id/fecha"
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false"/>
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,16 +51,7 @@
         android:inputType="numberDecimal"
         />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="30">
 
-        <DatePicker
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/fecha" />
-    </FrameLayout>
 
 
 </LinearLayout>

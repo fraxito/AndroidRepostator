@@ -11,9 +11,9 @@ public class EntradaDatos extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entrada_datos);
-        Fragment fragmento = new Repostaje();
-        FragmentTransaction cambio = getSupportFragmentManager().beginTransaction();
-        cambio.replace(R.id.marcoInicial, fragmento);
-        cambio.commit();
+                Fragment fragmento = new Repostaje();
+                FragmentTransaction cambio = getSupportFragmentManager().beginTransaction();
+                cambio.replace(R.id.marcoInicial, fragmento);
+                cambio.commit();
     }
 }

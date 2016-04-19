@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -13,6 +15,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 
 /**
@@ -37,34 +41,27 @@ public class Repostaje extends Fragment {
     public void onStart(){
         super.onStart();
 
-
-
-        final EditText editKilometros =(EditText) getActivity().findViewById(R.id.kilometros);
-
-        final EditText editPrecio =(EditText) getActivity().findViewById(R.id.precio);
+        final EditText editPrecio = (EditText) getActivity().findViewById(R.id.precio);
         editPrecio.setOnEditorActionListener(new TextView.OnEditorActionListener(){
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
-                boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_DONE){
-                    SharedPreferences sharedPref = getActivity().getSharedPreferences("datos",Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    //leo el tamaño de la lista de datos que tengo guardado en el shared preferences
-                    int size = sharedPref.getInt("listado_size", 0);
+                   SharedPreferences sp = getActivity().getSharedPreferences("datos", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sp.edit();
+                    int size = sp.getInt("Listado_size", 0);
                     size++;
-                    //guardo el contenido de la caja de texto "precio" en una variable del sharedpreferences
-                    editor.putString("repostaje_"+size, editPrecio.getText().toString());
-                    editor.putInt("listado_size", size);
+                    //Log.e("app1", String.valueOf(size));
+                    editor.putString("Repostaje_" + size, editPrecio.getText().toString());
+                    editor.putInt("Listado_size", size);
                     editor.commit();
-
-                   handled = true;
+                   //Log.e("app1", sp.getString("Repostaje_" + size, ""));
                     getActivity().finish();
                 }
-              return handled;
+              return false;
             }
         });
-
-
     }
+
+
 
 }
