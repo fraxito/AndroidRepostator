@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -37,24 +38,40 @@ public class Repostaje extends Fragment {
         return inflater.inflate(R.layout.fragment_repostaje, container, false);
     }
 
+    private void escribeDatos(){
+        EditText editPrecio = (EditText) getActivity().findViewById(R.id.precio);
+        EditText editKilometos = (EditText) getActivity().findViewById(R.id.kilometros);
+        EditText editLitros = (EditText) getActivity().findViewById(R.id.litros);
+        DatePicker editFecha = (DatePicker) getActivity().findViewById(R.id.fecha);
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("datos", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        int size = sharedPref.getInt("listado_size", 0);
+        size++;
+
+        editor.putString("precio_" + size, editPrecio.getText().toString());
+        editor.putString("kilometros_" + size, editKilometos.getText().toString());
+        editor.putString("litros_" + size, editLitros.getText().toString());
+
+        editor.putInt("dia_" + size, editFecha.getDayOfMonth());
+        editor.putInt("mes_" + size, editFecha.getMonth());
+        editor.putInt("year_" + size, editFecha.getYear());
+
+        editor.putInt("listado_size", size);
+
+        editor.commit();
+
+    }
+
     @Override
     public void onStart(){
         super.onStart();
-
         final EditText editPrecio = (EditText) getActivity().findViewById(R.id.precio);
         editPrecio.setOnEditorActionListener(new TextView.OnEditorActionListener(){
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
                 if (actionId == EditorInfo.IME_ACTION_DONE){
-                   SharedPreferences sp = getActivity().getSharedPreferences("datos", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sp.edit();
-                    int size = sp.getInt("Listado_size", 0);
-                    size++;
-                    //Log.e("app1", String.valueOf(size));
-                    editor.putString("Repostaje_" + size, editPrecio.getText().toString());
-                    editor.putInt("Listado_size", size);
-                    editor.commit();
-                   //Log.e("app1", sp.getString("Repostaje_" + size, ""));
+                    escribeDatos();
                     getActivity().finish();
                 }
               return false;
