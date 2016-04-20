@@ -18,7 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EntradaDatos"></activity>
+        <activity android:name=".EntradaDatos" />
+        <activity android:name=".ActualizaDatos"></activity>
     </application>
 
 </manifest>

@@ -115,21 +115,14 @@ public class MainActivity extends AppCompatActivity {
 
         listaVista.setAdapter(arrayAdapter);
 
-        listaVista.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
-            final Intent ventana = new Intent(MainActivity.this, EntradaDatos.class);
-
+        listaVista.setOnItemClickListener( new AdapterView.OnItemClickListener(){
+            final Intent ventana = new Intent(MainActivity.this, ActualizaDatos.class);
             @Override
-            public void onItemClick(AdapterView<?>adapter,View v, int position, long l){
-
-                String item = (String) adapter.getItemAtPosition(position);
-                Log.e("app1", item);
-                ventana.putExtra("precio", item);
+            public void onItemClick (AdapterView<?>adapter, View v, int position, long l){
+                ventana.putExtra("posicion", position);
                 startActivity(ventana);
-
             }
-
-
         });
 
     }
