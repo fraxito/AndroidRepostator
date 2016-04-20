@@ -75,14 +75,30 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         ArrayList<String> listadoRepostajes = new ArrayList <String>();
         ListView listaVista ;
-        SharedPreferences sp = getSharedPreferences("datos", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences("datos", Context.MODE_PRIVATE);
         //cargo la lista de repostajes de preferences al arraylist
-        int size = sp.getInt("Listado_size", 0);   //  <---- el tamaño de la lista de datos
+        int size = sharedPref.getInt("listado_size", 0);   //  <---- el tamaño de la lista de datos
 
+        String precio = "";
+        String kilometros = "";
+        String litros = "";
+        String dia = "";
+        String mes = "";
+        String year = "";
+        double costeTotal = 0;
         for(int i = 1 ; i <= size; i++)
         {
-            listadoRepostajes.add(sp.getString("Repostaje_" + i, null));
-            Log.e("app1", sp.getString("Repostaje_" + i, ""));
+            precio = sharedPref.getString("precio_" + i, null);
+            kilometros = sharedPref.getString("kilometros_" + i, null);
+            litros = sharedPref.getString("litros_" + i, null);
+
+            costeTotal = (Double.valueOf(precio) * Double.valueOf(litros));
+
+            dia =  String.valueOf( sharedPref.getInt("dia_" + i, 0) );
+            mes =  String.valueOf( sharedPref.getInt("mes_" + i, 0) );
+            year =  String.valueOf( sharedPref.getInt("year_" + i, 0) );
+
+            listadoRepostajes.add(kilometros + " km " + litros + " L " + precio + " €/L  total: " + String.format("%.2f", costeTotal) + " " +  dia + "-" + mes + "-" + year);
         }
 
         ///poblamos el listview con el arraylist
