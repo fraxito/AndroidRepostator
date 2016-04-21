@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -49,9 +51,18 @@ public class ActualizaDatos extends AppCompatActivity {
         SharedPreferences sharedPref = getSharedPreferences("datos", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
-        editor.putString("precio_" + indice, editPrecio.getText().toString());
-        editor.putString("kilometros_" + indice, editKilometos.getText().toString());
-        editor.putString("litros_" + indice, editLitros.getText().toString());
+        String precio = editPrecio.getText().toString();
+        if (precio.equals("")){precio = "0";}
+
+        String kilometros = editKilometos.getText().toString();
+        if (kilometros.equals("")){kilometros = "0";}
+
+        String litros = editLitros.getText().toString();
+        if (litros.equals("")){litros = "0";}
+
+        editor.putString("precio_" + indice, precio);
+        editor.putString("kilometros_" + indice, kilometros);
+        editor.putString("litros_" + indice, litros);
 
         editor.putInt("dia_" + indice, editFecha.getDayOfMonth());
         editor.putInt("mes_" + indice, editFecha.getMonth());
@@ -88,6 +99,14 @@ public class ActualizaDatos extends AppCompatActivity {
             }
         });
 
+        Button botonGuardar = (Button) findViewById(R.id.botonGuardar);
+        botonGuardar.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                escribeDatos(posicion);
+                finish();
+            }
+        });
     }
 
 }

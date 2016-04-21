@@ -88,9 +88,9 @@ public class MainActivity extends AppCompatActivity {
         double costeTotal = 0;
         for(int i = 1 ; i <= size; i++)
         {
-            precio = sharedPref.getString("precio_" + i, null);
-            kilometros = sharedPref.getString("kilometros_" + i, null);
-            litros = sharedPref.getString("litros_" + i, null);
+            precio = sharedPref.getString("precio_" + i, "0");
+            kilometros = sharedPref.getString("kilometros_" + i, "0");
+            litros = sharedPref.getString("litros_" + i, "0");
 
             costeTotal = (Double.valueOf(precio) * Double.valueOf(litros));
 
