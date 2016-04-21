@@ -41,7 +41,7 @@ public class ActualizaDatos extends AppCompatActivity {
 
     }
 
-    private void escribeDatos(){
+    private void escribeDatos(int indice){
         EditText editPrecio = (EditText) findViewById(R.id.precio);
         EditText editKilometos = (EditText) findViewById(R.id.kilometros);
         EditText editLitros = (EditText) findViewById(R.id.litros);
@@ -49,22 +49,20 @@ public class ActualizaDatos extends AppCompatActivity {
         SharedPreferences sharedPref = getSharedPreferences("datos", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
-        int size = sharedPref.getInt("listado_size", 0);
-        size++;
+        editor.putString("precio_" + indice, editPrecio.getText().toString());
+        editor.putString("kilometros_" + indice, editKilometos.getText().toString());
+        editor.putString("litros_" + indice, editLitros.getText().toString());
 
-        editor.putString("precio_" + size, editPrecio.getText().toString());
-        editor.putString("kilometros_" + size, editKilometos.getText().toString());
-        editor.putString("litros_" + size, editLitros.getText().toString());
-
-        editor.putInt("dia_" + size, editFecha.getDayOfMonth());
-        editor.putInt("mes_" + size, editFecha.getMonth());
-        editor.putInt("year_" + size, editFecha.getYear());
-
-        editor.putInt("listado_size", size);
+        editor.putInt("dia_" + indice, editFecha.getDayOfMonth());
+        editor.putInt("mes_" + indice, editFecha.getMonth());
+        editor.putInt("year_" + indice, editFecha.getYear());
 
         editor.commit();
 
     }
+
+    //declaramos la variable que guardará la posición de la fila que pulsó el usuario
+    int posicion=0;
 
     @Override
     public void onStart(){
@@ -72,7 +70,7 @@ public class ActualizaDatos extends AppCompatActivity {
 
         Bundle parametros = getIntent().getExtras();
         if (parametros != null){
-            int posicion = parametros.getInt("posicion");
+            posicion = parametros.getInt("posicion");
             posicion++;
 
             leeDatos(posicion);
@@ -83,7 +81,7 @@ public class ActualizaDatos extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
                 if (actionId == EditorInfo.IME_ACTION_DONE){
-                    escribeDatos();
+                    escribeDatos(posicion);
                     finish();
                 }
                 return false;
